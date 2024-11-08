@@ -1,0 +1,10 @@
+.env
+./storage
+
+.venv
+
+.idea
+./idea
+.vscode
+./vscode
+.code
