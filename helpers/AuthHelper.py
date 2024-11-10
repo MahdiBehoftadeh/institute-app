@@ -48,7 +48,6 @@ class AuthHelper:
         print("User logged out.")
         exit()
 
-
     def check(self):
         self.load_user_data()
         return self.username is not None
