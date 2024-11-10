@@ -6,11 +6,11 @@ from models.User import User
 
 
 class AuthHelper:
-    def __init__(self, storage_file='./storage/auth_data.txt'):  # Change to .txt
-        self.storage_file = storage_file
+    def __init__(self):
+        self.storage_file = './storage/auth_data.txt'
         self.username = None
         self.user_type = None
-        self.encryption_helper = EncryptionHelper()  # Initialize encryption helper
+        self.encryption_helper = EncryptionHelper()
         self.load_user_data()
 
     def load_user_data(self):
@@ -24,18 +24,13 @@ class AuthHelper:
                     self.user_type = data.get('user_type')
             except Exception as e:
                 print(f"Failed to load user data: {e}")
-                # Optionally remove the corrupted file
                 if os.path.exists(self.storage_file):
                     os.remove(self.storage_file)
 
     def save_user_data(self):
         data = json.dumps({'username': self.username, 'user_type': self.user_type})
         encrypted_data = self.encryption_helper.encrypt(data)
-
-        # Ensure the directory exists
         os.makedirs(os.path.dirname(self.storage_file), exist_ok=True)
-
-        # Create the file and write the encrypted data if it does not exist
         if not os.path.exists(self.storage_file):
             with open(self.storage_file, 'wb') as file:
                 file.write(encrypted_data)
@@ -49,7 +44,7 @@ class AuthHelper:
         self.username = None
         self.user_type = None
         if os.path.exists(self.storage_file):
-            os.remove(self.storage_file)  # Remove the file
+            os.remove(self.storage_file)
         print("User logged out.")
         exit()
 
