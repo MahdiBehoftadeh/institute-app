@@ -11,7 +11,6 @@ class UserController:
         self.connection = connection
         self.user_model = User(self.connection)
 
-
     def login(self, username, password):
         user = self.user_model.find_one({
             'username': username,
@@ -59,7 +58,7 @@ class UserController:
 
         requested = self.user_model.update({
             'id': user['id']
-        },{
+        }, {
             'vip': 'requested'
         })
         if requested:
@@ -104,7 +103,7 @@ class UserController:
 
         updated_profile = self.user_model.update({
             'id': user['id']
-        },update_data)
+        }, update_data)
         if updated_profile:
             print('Profile updated successfully.')
             return True
@@ -138,7 +137,7 @@ class UserController:
 
         updated_user = self.user_model.update({
             'id': user_id
-        },{
+        }, {
             'vip': vip_status
         })
 
@@ -146,7 +145,6 @@ class UserController:
             print('VIP status updated successfully.')
         else:
             print('Failed to update profile.')
-
 
     def index(self):
         users = self.user_model.find_all()
