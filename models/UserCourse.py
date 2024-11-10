@@ -1,5 +1,5 @@
 from models.Model import Model
 
 
-class UserCourses(Model):
+class UserCourse(Model):
     table_name = 'user_courses'

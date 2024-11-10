@@ -24,8 +24,6 @@ class DatabaseConnection:
                 database=self.database,
                 port=self.port
             )
-            if self.connection.is_connected():
-                print("Successfully connected to the database.")
             return self.connection
         except Error as e:
             print(f"Error while connecting to MySQL: {e}")

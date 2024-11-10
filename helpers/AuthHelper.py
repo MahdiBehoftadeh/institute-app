@@ -6,7 +6,7 @@ from models.User import User
 
 
 class AuthHelper:
-    def __init__(self, storage_file='../storage/auth_data.txt'):  # Change to .txt
+    def __init__(self, storage_file='./storage/auth_data.txt'):  # Change to .txt
         self.storage_file = storage_file
         self.username = None
         self.user_type = None
@@ -44,7 +44,6 @@ class AuthHelper:
         self.username = username
         self.user_type = user_type
         self.save_user_data()
-        print(f"User logged in with username: {self.username} and type: {self.user_type}")
 
     def logout(self):
         self.username = None
@@ -52,8 +51,11 @@ class AuthHelper:
         if os.path.exists(self.storage_file):
             os.remove(self.storage_file)  # Remove the file
         print("User logged out.")
+        exit()
+
 
     def check(self):
+        self.load_user_data()
         return self.username is not None
 
     def get_username(self):
