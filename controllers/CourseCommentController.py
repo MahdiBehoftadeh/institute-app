@@ -107,6 +107,7 @@ class CourseCommentController:
             for data in datas
         ]
         headers = [
-            "ID", "Comment text", "Course Name", "Instructor", "Scheduled Day", "Start Time", "End Time", "Comment Created At"
+            "ID", "Comment text", "Course Name", "Instructor", "Scheduled Day", "Start Time", "End Time",
+            "Comment Created At"
         ]
         print(tabulate(table_data, headers=headers, tablefmt="fancy_grid"))
