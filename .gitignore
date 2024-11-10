@@ -8,3 +8,8 @@ storage/
 .vscode
 ./vscode
 .code
+
+# Ignore compiled Python files
+*.pyc
+*.pyo
+__pycache__/
