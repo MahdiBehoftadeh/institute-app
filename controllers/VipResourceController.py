@@ -1,4 +1,3 @@
-from configs.DatabaseConnection import DatabaseConnection
 from tabulate import tabulate
 
 from models.VipResource import VipResource
