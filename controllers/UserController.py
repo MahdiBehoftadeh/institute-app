@@ -13,7 +13,6 @@ class UserController:
 
 
     def login(self, username, password):
-        print(HashHelper.hash(password))
         user = self.user_model.find_one({
             'username': username,
             'password': HashHelper.hash(password)
