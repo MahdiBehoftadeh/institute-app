@@ -29,7 +29,8 @@ class Main:
             4: "VIP Resources",
             5: "Request VIP Account",
             6: "Edit Profile",
-            7: "Logout",
+            7: "Start online exam",
+            8: "Logout",
         }
 
         print("\nLogged in as user\n")
@@ -61,6 +62,7 @@ class Main:
         auth_helper = AuthHelper()
         course_controller = CourseController(self.connection)
         user_controller = UserController(self.connection)
+        exam_controller = ExamController(self.connection)
 
         if choice == '1':
             course_controller.user_courses()
@@ -79,6 +81,8 @@ class Main:
         elif choice == '6':
             user_controller.edit_profile()
         elif choice == '7':
+            exam_controller.user_start_exam()
+        elif choice == '8':
             auth_helper.logout()
         else:
             print("Invalid choice. Please try again.")
