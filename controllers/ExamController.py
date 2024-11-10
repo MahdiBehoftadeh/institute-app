@@ -144,8 +144,6 @@ class ExamController:
         else:
             print("Failed to save exam.")
 
-
-
     def __print_exams_table(self, datas):
         table_data = [
             [
@@ -161,7 +159,8 @@ class ExamController:
             ]
             for data in datas
         ]
-        headers = ["ID", "Name", "Description", "Duration(s)", "Total Points", "Start At", "Expires At", "Created At", "Updated At"]
+        headers = ["ID", "Name", "Description", "Duration(s)", "Total Points", "Start At", "Expires At", "Created At",
+                   "Updated At"]
         print(tabulate(table_data, headers=headers, tablefmt="fancy_grid"))
 
     def __print_exam_results_table(self, datas):
@@ -193,5 +192,6 @@ class ExamController:
             ]
             for data in datas
         ]
-        headers = ["Question ID", "Question", "Chosen Answer", "Correct Answer", "Answer Status", "Earned Points", "Question Points"]
+        headers = ["Question ID", "Question", "Chosen Answer", "Correct Answer", "Answer Status", "Earned Points",
+                   "Question Points"]
         print(tabulate(table_data, headers=headers, tablefmt="fancy_grid"))
