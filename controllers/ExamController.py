@@ -1,6 +1,8 @@
 from tabulate import tabulate
 
+from helpers.AuthHelper import AuthHelper
 from models.Exam import Exam
+from models.Question import Question
 from models.User import User
 from models.UserExam import UserExam
 
@@ -79,6 +81,69 @@ class ExamController:
         print(f"Exam {exam['name']} results: ")
         self.__print_exam_results_table(results)
 
+    def user_start_exam(self):
+        auth_helper = AuthHelper()
+        user = auth_helper.get_user(self.connection)
+
+        self.index()
+        exams = self.exam_model.find_all()
+        exam_ids = [exam['id'] for exam in exams]
+        exam_id = int(input("\nEnter exam ID: "))
+        while exam_id not in exam_ids:
+            print(f"Course {exam_id} does not exist")
+            exam_id = int(input("\nEnter exam ID: "))
+        exam = self.exam_model.find_one({
+            'id': exam_id
+        })
+
+        question_model = Question(self.connection)
+        questions = question_model.find_all({
+            'exam_id': exam_id
+        })
+
+        answers = []
+
+        for question in questions:
+            print(f"{question['text']} ({question['points']} points)")
+            print(f"a. {question['option_a']}")
+            print(f"b. {question['option_b']}")
+            print(f"c. {question['option_c']}")
+            print(f"d. {question['option_d']}")
+            answer = input("\nEnter your choice(a/b/c/d): ")
+            while answer not in ["a", "b", "c", "d"]:
+                print(f"Invalid choice. Please choose from 'a', 'b', 'c', 'd'")
+                answer = input("\nEnter your choice(a/b/c/d): ")
+            answers.append({
+                'question_id': question['id'],
+                'question_text': question['text'],
+                'chosen_answer': answer,
+                'correct_answer': question['correct_answer'],
+                'points': question['points'],
+                'answered_correctly': bool(question['correct_answer'] == answer),
+                'earned_points': int(question['correct_answer'] == answer) * question['points']
+            })
+
+        total_score = 0
+        for answer in answers:
+            total_score += answer['earned_points']
+
+        user_exam_model = UserExam(self.connection)
+        created_user_exam = user_exam_model.create({
+            'user_id': user['id'],
+            'exam_id': exam_id,
+            'score': total_score
+        })
+
+        print(f"Exam {exam['name']} results: ")
+        print(f"Total score: {total_score}")
+
+        self.__print_started_exam_results_table(answers)
+
+        if created_user_exam:
+            print(f"Exam {exam['name']} saved successfully.")
+        else:
+            print("Failed to save exam.")
+
 
 
     def __print_exams_table(self, datas):
@@ -113,4 +178,20 @@ class ExamController:
             for data in datas
         ]
         headers = ["ID", "User Name", "User Username", "Score", "Start Time", "Expiration Time", "Completion Time"]
+        print(tabulate(table_data, headers=headers, tablefmt="fancy_grid"))
+
+    def __print_started_exam_results_table(self, datas):
+        table_data = [
+            [
+                data['question_id'],
+                data['question_text'],
+                data['chosen_answer'],
+                data['correct_answer'],
+                (str('Correct ✅') if data['correct_answer'] else str('Incorrect ❌')),
+                data['earned_points'],
+                data['points']
+            ]
+            for data in datas
+        ]
+        headers = ["Question ID", "Question", "Chosen Answer", "Correct Answer", "Answer Status", "Earned Points", "Question Points"]
         print(tabulate(table_data, headers=headers, tablefmt="fancy_grid"))
