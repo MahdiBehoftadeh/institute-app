@@ -1,5 +1,5 @@
 class Model:
-    table_name = "your_table_name"
+    table_name = "table_name"
 
     def __init__(self, db_connection):
         self.db_connection = db_connection
