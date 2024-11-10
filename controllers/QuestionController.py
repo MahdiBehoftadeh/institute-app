@@ -3,7 +3,6 @@ from tabulate import tabulate
 from controllers.ExamController import ExamController
 from models.Exam import Exam
 from models.Question import Question
-from models.VipResource import VipResource
 
 
 class QuestionController:
@@ -66,5 +65,6 @@ class QuestionController:
             ]
             for data in datas
         ]
-        headers = ["ID", "Name", "Description", "Duration(s)", "Total Points", "Start At", "Expires At", "Created At", "Updated At"]
+        headers = ["ID", "Name", "Description", "Duration(s)", "Total Points", "Start At", "Expires At", "Created At",
+                   "Updated At"]
         print(tabulate(table_data, headers=headers, tablefmt="fancy_grid"))
