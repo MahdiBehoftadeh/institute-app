@@ -1,14 +1,12 @@
-import json
 import os
 from cryptography.fernet import Fernet
 from dotenv import load_dotenv
 
-load_dotenv()  # Load environment variables from .env file
+load_dotenv()
 
 
 class EncryptionHelper:
     def __init__(self):
-        # Retrieve the encryption key from environment variable
         self.key = os.getenv('ENCRYPTION_KEY').encode()
         self.fernet = Fernet(self.key)
 
