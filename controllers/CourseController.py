@@ -1,4 +1,3 @@
-from configs.DatabaseConnection import DatabaseConnection
 from helpers.AuthHelper import AuthHelper
 from models.Course import Course
 from tabulate import tabulate
@@ -93,7 +92,6 @@ class CourseController:
         self.__print_course_table(courses)
         course_ids = [course['id'] for course in courses]
 
-
         course_id = int(input("\nEnter Course ID: "))
         while course_id not in course_ids:
             print(f"Course {course_id} does not exist")
@@ -146,7 +144,6 @@ class CourseController:
         else:
             print(f"Failed to create course")
 
-
     def __print_course_table(self, courses):
         table_data = [
             [
@@ -165,6 +162,3 @@ class CourseController:
             "Location", "Scheduled Day", "Start Time", "End Time"
         ]
         print(tabulate(table_data, headers=headers, tablefmt="fancy_grid"))
-
-
-
